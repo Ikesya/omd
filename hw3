@@ -1,0 +1,32 @@
+corpus = [
+ 'Crock Pot Pasta Never boil pasta again',
+ 'Pasta Pomodoro Fresh ingredients Parmesan to taste'
+]
+class CountVectorizer():
+    def fit_transform(self, features):
+        words_new = []
+        for el in features:
+            words_new += el.lower().split()
+            words_unique = list(set(words_new))
+        vectors = []
+        words_dict = dict(enumerate(words_unique))
+        for el in features:
+            vector = [0] * len(words_unique)
+            for word in el.lower().split():
+                for k, v in words_dict.items():
+                    if v == word:
+                        vector[k] += 1
+            vectors.append(vector)
+        return vectors              
+    
+    def get_feature_names(self, features):
+        words_new = []
+        for el in features:
+            words_new += el.lower().split()
+            words_unique = list(set(words_new))
+        return words_unique
+
+vectorizer = CountVectorizer()
+count_matrix = vectorizer.fit_transform(corpus)
+print(vectorizer.get_feature_names(corpus))
+print(count_matrix)    
